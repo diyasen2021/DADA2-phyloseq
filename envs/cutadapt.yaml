@@ -1,0 +1,9 @@
+name: cutadapt_env
+channels:
+  - conda-forge
+  - bioconda
+  - defaults
+dependencies:
+  - cutadapt
+  - python=3.9
+

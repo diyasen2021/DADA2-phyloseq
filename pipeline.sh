@@ -1,38 +1,46 @@
 #!/bin/bash
-
 # Exit on error
 set -e
 
 echo "Starting DADA2 pipeline..."
 
-# Step 1: Run Preprocessing (Cutadapt + FastQC)
+# Step 1: Run Preprocessing (FastQC + Cutadapt)
 echo "Running preprocessing..."
 
-# Activate Cutadapt environment
-echo "Activating Cutadapt environment..."
+# Ensure FastQC environment exists
+if ! conda env list | grep -q "^fastqc_env\s"; then
+    echo "Creating FastQC environment..."
+    mamba env create -f fastqc_environment.yaml || conda env create -f fastqc_environment.yaml
+fi
+
+echo "Activating FastQC environment..."
 source ~/miniconda/etc/profile.d/conda.sh
-conda activate fastqc
+conda activate fastqc_env
 ./preprocessing_fastqc.sh
 conda deactivate
 
-# Activate FastQC environment
-echo "Activating FastQC environment..."
-source activate /Users/diyasen/cutadapt_env
+# Ensure Cutadapt environment exists
+if ! conda env list | grep -q "^cutadapt_env\s"; then
+    echo "Creating Cutadapt environment..."
+    mamba env create -f cutadapt_environment.yaml || conda env create -f cutadapt_environment.yaml
+fi
+
+echo "Activating Cutadapt environment..."
+conda activate cutadapt_env
 ./preprocessing_cutadapt.sh
 conda deactivate
 
 echo "Preprocessing completed!"
 
-# Step 2: Run DADA2 Analysis (Assumes R runs in base or a dedicated R environment)
+# Step 2: Run DADA2 Analysis
 echo "Running DADA2 processing..."
-conda activate dada2_env  # Activate DADA2 environment if needed
+conda activate dada2_env
 Rscript dada2.R
 conda deactivate
 echo "DADA2 processing completed!"
 
 # Step 3: Run Phyloseq Analysis
 echo "Running Phyloseq analysis..."
-conda activate phyloseq_env  # Activate Phyloseq environment if needed
 Rscript phyloseq.R
 conda deactivate
 echo "Phyloseq analysis completed!"
