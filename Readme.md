@@ -6,14 +6,6 @@ This project provides a pipeline for processing 16S amplicon sequencing data usi
 ## Setup
 
 - Install conda: https://conda.io/projects/conda/en/latest/index.html
-- Create the conda environment:
-  ```bash
-  conda create -n dada2_env -c bioconda dada2 fastp cutadapt fastqc
-  ```
-- Activate the environment:
-  ```bash
-  conda activate dada2_env
-  ```
 
 ## Running the Pipeline
 
