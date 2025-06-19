@@ -21,6 +21,12 @@ Run the main pipeline script:
 ```bash
 bash pipeline.sh
 ```
+## What does the pipeline do
+
+1. Run FastQC on raw FASTQ files
+2. Trim primers using Cutadapt
+3. Run DADA2 Analysis
+4. Run Phyloseq Analysis
 
 ## Folder Structure
 
