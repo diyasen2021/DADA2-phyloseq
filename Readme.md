@@ -1,5 +1,5 @@
 
-# DADA2 Project
+# Amplicon sequence analysis
 
 This project provides a pipeline for processing 16S amplicon sequencing data using the DADA2 and other tools like Cutadapt and FastQC.
 
